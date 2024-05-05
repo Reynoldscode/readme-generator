@@ -5,86 +5,72 @@ inquirer
   .prompt([
     {
       type: "input",
-      message: "What is the title of your application repository?"
+      message: "What is the title of your application repository?",
+      name:"title"
     },
     {
       type:"input",
-      message: "Write a brief decription about your application?"
+      message: "Write a brief decription about your application?",
+      name: "discription"
     },
     {
       type:"input",
-      message: "Write a brief decription about your application?"
+      message: "Write down the intallation process.",
+      name: "installation"
     },
     {
       type:"input",
-      message: "Write down the intallation process."
+      message: "How will your application be used?",
+      name: "usage"
     },
     {
       type:"input",
-      message: "How will your application be used?"
+      message: "What contribution did you make in the application process?",
+      name:"contribution"
     },
     {
       type:"input",
-      message: "What contribution did you make in the application process?"
-    },
-    {
-      type:"input",
-      message: "What are the test instructions?"
+      message: "What are the test instructions?",
+      name: "test"
     },
     {
       type:"list",
-      message: "Select the license you used for the application repository?"
-      choices: []
-    },
-
-
-    // , Installation, Usage, Contributing, and Tests
-
-  ])
-  .then((response) =>
-    console.log(colors[response.color](`Your favorite color is ${response.color}!`))
-  );
-
-
-  Inquirer example:
-
-const inquirer = require("inquirer");
-const colors = require("colors");
-const fs = require("fs");
-
-inquirer.prompt(
-  [
-    {
-      type: "list",
-      message: "What is your favorite color?",
-      name: "colorChoice",
-      choices: ["red", "blue", "green", "yellow", "cyan", "magenta"],
-    },
-    {
-      type: "input", 
-      message: "What color of all of these do you like the least?",
-      name: "leastFavorite"
+      message: "Select the license you used for the application repository?",
+      name: "License",
+      choices: [ 
+        "GNU general Public License v3.0", 
+        "Apache License 2.0",
+        "MIT License", 
+        "BSD 2-Clause 'Simplified License'", 
+        "BSD 3-Clause 'New'or 'revised' license", 
+        "Boost Software License 1.0", 
+        "Creative Commons Zero v1.0 Universal", 
+        "Eclipse Public License 2.0" 
+      ]
     }
-  ]
-)
-
+  ])
+  
   .then((response) => {
 
-    const html = `
-  <html>
-    <head>
-      <title>Colors!!!</title>
-    </head>
-    <body>
-      <h1>Your favorite color is ${response.colorChoice}</h1>
-      <p>Your least favorite is ${response.leastFavorite}</p>
-    </body>
-  </html>
-    `
-
-    fs.writeFile("index.html", html, function(err){
-      if( err ) return console.log("Oooops")
-      console.log("The html is ready")
-    })
+    const readme = `#${response.title}
+     ${response.description}
+     ## installation
+     ${response.inallation}
+     ## Usage
+     ${response.usage} 
+     ## contribution
+     ${response.contribution}
+     ##Tests
+     ${response.test}
+     ##Lincense
+     ${response.lincense}`;
+  
+    fs.writeFile("README.md", readme, (err) => {
+      if( err ) {
+      console.log("Error writing README file:", err);
+    } else {
+      console.log("README file created succesfuly!");
+    }
   });
+ });
 
